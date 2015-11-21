@@ -5,12 +5,14 @@ import React, {
   StyleSheet,
   Text,
   View,
+  StatusBarIOS,
 } from 'react-native';
 
 import GameScreen from './screens/GameScreen';
 
 export default class TrafficNutz extends React.Component {
   render() {
+    StatusBarIOS.setHidden(true);
     return (
       <GameScreen/>
     );
