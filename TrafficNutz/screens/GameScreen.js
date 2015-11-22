@@ -2,11 +2,12 @@
 
 import React, {
   StyleSheet,
-  Text,
+  Image,
   View,
 } from 'react-native';
 
 import Road from '../containers/Road';
+import Squirrel from '../components/Squirrel'
 
 export default class GameScreen extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ export default class GameScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Road style={styles.road}>
-          <Text> bleh </Text>
+          <Squirrel style={styles.squirrel}/>
         </Road>
       </View>
     );
@@ -36,5 +37,11 @@ const styles = StyleSheet.create({
   },
   road: {
     flex: 1,
+    justifyContent: 'center'
   },
+  squirrel: {
+    flex: 1,
+    width: 45,
+    height: 75
+  }
 });
