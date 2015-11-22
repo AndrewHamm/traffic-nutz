@@ -37,6 +37,6 @@ const styles = StyleSheet.create({
   },
   road: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 });
