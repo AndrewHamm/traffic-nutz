@@ -39,9 +39,4 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
-  squirrel: {
-    flex: 1,
-    width: 45,
-    height: 75
-  }
 });
