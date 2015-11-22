@@ -88,6 +88,10 @@ const width = laneWidth - (marginLeft + marginRight);
 const ratio = 541 / 278;
 
 const styles = StyleSheet.create({
+  container: {
+    height: screen.height,
+    justifyContent: 'center'
+  },
   squirrel: {
     width: width,
     height: width * ratio,
