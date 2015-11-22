@@ -6,7 +6,8 @@ import React, {
   View,
 } from 'react-native';
 
-// TODO: Why do I need export default ?
+import Road from '../containers/Road';
+
 export default class GameScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -18,9 +19,9 @@ export default class GameScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.road}>
-          <Text>{this.state.score}</Text>
-        </View>
+        <Road style={styles.road}>
+          <Text> bleh </Text>
+        </Road>
       </View>
     );
   }
@@ -35,8 +36,5 @@ const styles = StyleSheet.create({
   },
   road: {
     flex: 1,
-    backgroundColor: '#828282',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+  },
 });
