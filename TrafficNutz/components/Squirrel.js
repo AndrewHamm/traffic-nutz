@@ -5,6 +5,7 @@ import React, {
   View,
   Image,
   PanResponder,
+  LayoutAnimation,
   Text
 } from 'react-native';
 
@@ -23,7 +24,14 @@ export default class Squirrel extends React.Component {
     };
   }
 
+  _setAnimationPreset() {
+    let animationPreset = LayoutAnimation.Presets.easeInEaseOut;
+    animationPreset.duration = 250;
+    LayoutAnimation.configureNext(animationPreset);
+  }
+
   _swipeRight() {
+    this._setAnimationPreset();
     if (this.state.lane >= MAX_LANE_LOC) {
       return;
     }
@@ -33,6 +41,7 @@ export default class Squirrel extends React.Component {
   }
 
   _swipeLeft() {
+    this._setAnimationPreset();
     if (this.state.lane <= 0) {
       return;
     }
@@ -88,19 +97,20 @@ export default class Squirrel extends React.Component {
   }
 
   render() {
+    const marginLeft = MARGIN_LEFT + LANE_WIDTH * this.state.lane;
     return (
       <View style={styles.container} {...this._panResponder.panHandlers}>
-        <Image style={styles.squirrel} source={require('../images/backSquirrel1.png')}/>
+        <Image style={[styles.squirrel, {marginLeft: marginLeft}]} source={require('../images/backSquirrel1.png')}/>
         <Text>{this.state.lane} {this.state.jump? 'true': 'false'}</Text>
       </View>
     );
   }
 }
 
-const marginLeft = 27;
-const marginRight = 11;
-const laneWidth = 345 / 4;
-const width = laneWidth - (marginLeft + marginRight);
+const MARGIN_LEFT = 27;
+const MARGIN_RIGHT = 11;
+const LANE_WIDTH = 345 / 4;
+const width = LANE_WIDTH - (MARGIN_LEFT + MARGIN_RIGHT);
 const ratio = 541 / 278;
 
 const styles = StyleSheet.create({
@@ -111,7 +121,6 @@ const styles = StyleSheet.create({
   squirrel: {
     width: width,
     height: width * ratio,
-    marginLeft: marginLeft + laneWidth * 0,
-    marginRight: marginRight,
+    marginRight: MARGIN_RIGHT,
   },
 });
