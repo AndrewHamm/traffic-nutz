@@ -11,6 +11,7 @@ import React, {
 const screen = require('Dimensions').get('window');
 
 const VELOCITY_THRESH = 1.7;
+const MAX_LANE_LOC = 3;
 
 export default class Squirrel extends React.Component {
   constructor(props) {
@@ -22,22 +23,37 @@ export default class Squirrel extends React.Component {
     };
   }
 
+  _swipeRight() {
+    if (this.state.lane >= MAX_LANE_LOC) {
+      return;
+    }
+    this.setState({
+      lane: this.state.lane + 1
+    })
+  }
+
+  _swipeLeft() {
+    if (this.state.lane <= 0) {
+      return;
+    }
+    this.setState({
+      lane: this.state.lane - 1
+    })
+  }
+
+  _swipeUp() {
+    this.setState({
+      jump: !this.state.jump
+    })
+  }
+
   _handleSwipe(gestureState) {
     if(gestureState.vx > VELOCITY_THRESH) {
-      // move right
-      this.setState({
-        lane: this.state.lane + 1
-      })
+      this._swipeRight()
     } else if (gestureState.vx < -VELOCITY_THRESH) {
-      // move left
-      this.setState({
-        lane: this.state.lane - 1
-      })
+      this._swipeLeft()
     } else if (gestureState.vy < VELOCITY_THRESH) {
-      // jump
-      this.setState({
-        jump: !this.state.jump
-      })
+      this._swipeUp()
     }
   }
 
