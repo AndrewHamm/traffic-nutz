@@ -129,7 +129,8 @@ export default class Squirrel extends React.Component {
   }
 }
 
-const LANE_WIDTH = 345 / 4;
+const ROAD_WIDTH = screen.width - 30;
+const LANE_WIDTH = ROAD_WIDTH / 4;
 const MARGIN_LEFT = 22;
 const MARGIN_RIGHT = 8;
 const WIDTH = LANE_WIDTH - (MARGIN_LEFT + MARGIN_RIGHT);
