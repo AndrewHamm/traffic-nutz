@@ -6,14 +6,13 @@ import React, {
   Image,
   PanResponder,
   LayoutAnimation,
-  Text
 } from 'react-native';
 
 const screen = require('Dimensions').get('window');
 
 const VELOCITY_THRESH = 1.7;
 const MAX_LANE_LOC = 3;
-const JUMP_DURATION = 600;
+const JUMP_DURATION = 800;
 
 export default class Squirrel extends React.Component {
   constructor(props) {
