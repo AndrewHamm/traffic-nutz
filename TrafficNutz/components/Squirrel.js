@@ -13,6 +13,7 @@ const screen = require('Dimensions').get('window');
 
 const VELOCITY_THRESH = 1.7;
 const MAX_LANE_LOC = 3;
+const JUMP_DURATION = 600;
 
 export default class Squirrel extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ export default class Squirrel extends React.Component {
     this.state = {
       lane: 0,
       canSwipe: true,
-      jump: false
+      inAir: false
     };
   }
 
@@ -51,9 +52,15 @@ export default class Squirrel extends React.Component {
   }
 
   _swipeUp() {
+    // if it is already jumping, dont allow another jump
+    if (this.state.jump) {
+      return;
+    }
     this.setState({
-      jump: !this.state.jump
+      inAir: true
     })
+    // come down after a specified time
+    window.setTimeout(() => this.setState({inAir: false}), JUMP_DURATION)
   }
 
   _handleSwipe(gestureState) {
@@ -96,22 +103,39 @@ export default class Squirrel extends React.Component {
     });
   }
 
+  // given an initial margin, adds the distance of the lane it is in
+  _getMarginWithLane(initialMargin) {
+    return initialMargin + LANE_WIDTH * this.state.lane;
+  }
+
+  _getSquirrelImage() {
+    const marginLeft = this._getMarginWithLane(MARGIN_LEFT);
+    if (!this.state.inAir) {
+      return (
+        <Image style={[styles.squirrel, {marginLeft: marginLeft}]} source={require('../images/groundSquirrel.png')}/>
+      )
+    } else {
+      return (
+        <Image style={[styles.squirrel, {marginLeft: marginLeft}]} source={require('../images/jumpSquirrel.png')}/>
+      )
+    }
+  }
+
   render() {
-    const marginLeft = MARGIN_LEFT + LANE_WIDTH * this.state.lane;
     return (
       <View style={styles.container} {...this._panResponder.panHandlers}>
-        <Image style={[styles.squirrel, {marginLeft: marginLeft}]} source={require('../images/backSquirrel1.png')}/>
-        <Text>{this.state.lane} {this.state.jump? 'true': 'false'}</Text>
+        {this._getSquirrelImage()}
       </View>
     );
   }
 }
 
-const MARGIN_LEFT = 27;
-const MARGIN_RIGHT = 11;
 const LANE_WIDTH = 345 / 4;
-const width = LANE_WIDTH - (MARGIN_LEFT + MARGIN_RIGHT);
-const ratio = 541 / 278;
+const MARGIN_LEFT = 22;
+const MARGIN_RIGHT = 8;
+const WIDTH = LANE_WIDTH - (MARGIN_LEFT + MARGIN_RIGHT);
+// the ration of height/width of the image
+const RATIO = 1687 / 1045;
 
 const styles = StyleSheet.create({
   container: {
@@ -119,8 +143,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   squirrel: {
-    width: width,
-    height: width * ratio,
+    width: WIDTH,
+    height: WIDTH * RATIO,
+    marginLeft: MARGIN_LEFT,
     marginRight: MARGIN_RIGHT,
   },
 });
